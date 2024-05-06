@@ -33,10 +33,16 @@ internal class Program
         Report(line, string.Empty, message);
     }
 
-    private static void RunFile(string filename)
+    private static void RunFile(string filePath)
     {
-        byte[] bytes = File.ReadAllBytes(filename);
-        Run(bytes.ToString()!);
+        if (!File.Exists(filePath)) 
+        {
+            Environment.Exit((int)ExitCode.BadArguments);
+        }
+
+        var loxScript = File.ReadAllText(filePath);
+
+        Run(loxScript);
     }
 
     private static void RunPrompt()
